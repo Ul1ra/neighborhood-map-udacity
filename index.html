@@ -2,15 +2,45 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Ramen!</title>
+        <title>Brunch!</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
-        <div id="map"></div>
+        <script type="text/html" id="info-template">
+            <div class="container-fluid info-div">
+                <div class="row img-rating-header-row">
+                    <div class="col-sm-6">
+                        <img class="mainImg" src="{{img_url}}">
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h2 class="firstHeading">{{title}}</h2>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <img src="{{rating_img_url}}" alt="rating">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row content-row">
+                    <div class="col-sm-12">
+                        <p>{{content}}</p>
+                    </div>
+                </div>
+            <div>
+        </script>
+        <div class="container-fluid">
+            <div class="row main">
+                <div class="col-md-3 list-panel">Placeholder for list</div>
+                <div class="col-md-9" id="map"></div>
+            </div>
+        </div>
         <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAf8zJvM5q7KjF0tITn1HwpZw_5WFyzXn8&callback=initMap">
-        // async defer
-        // &callback=initMap
         </script>
         <script src="lib/knockout-3.2.0.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>

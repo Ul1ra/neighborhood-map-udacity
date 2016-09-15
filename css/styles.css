@@ -4,6 +4,26 @@ html, body {
     padding: 0;
 }
 
+.container-fluid {
+    height: 100%;
+}
+
+.list-panel {
+
+}
+
+.main {
+    height: 100%;
+}
+
 #map {
     height: 100%;
 }
+
+.mainImg {
+    height: 90px;
+    width: 90px;
+    border-radius: 4px;
+}
+
+/*.info*/

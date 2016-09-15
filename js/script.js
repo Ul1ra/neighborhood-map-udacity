@@ -15,16 +15,16 @@ function initMap() {
 }
 
 
-function addMarker(restObj, map){
-    var contentString = '<div id="content">'+
-        '<div id="siteNotice">'+
-        '</div>'+
-        '<h1 id="firstHeading" class="firstHeading">San Francisco</h1>'+
-        '<div id="bodyContent">'+
-        '<p><b>San Francisco</b> is actually pretty awesome.<br><br>' +
-        'In case you weren\'t aware.' +
-        '</div>'+
-        '</div>';
+function addMarker(restObj, map) {
+    // var contentString = '<div id="content">'+
+    //     '<div id="siteNotice">'+
+    //     '</div>'+
+    //     '<h1 id="firstHeading" class="firstHeading">San Francisco</h1>'+
+    //     '<div id="bodyContent">'+
+    //     '<p><b>San Francisco</b> is actually pretty awesome.<br><br>' +
+    //     'In case you weren\'t aware.' +
+    //     '</div>'+
+    //     '</div>';
 
     marker = new google.maps.Marker({
         position: restObj.coordinates,
@@ -34,18 +34,14 @@ function addMarker(restObj, map){
         title: 'Hello World!'
     });
 
-    var infoWindow = new google.maps.InfoWindow({
-        content: contentString
-    });
-
     // marker.addListener('click', toggleBounce);
     marker.addListener('click', function(){
         marker.setAnimation(4);
-        infoWindow.open(map, marker);
+        restObj.infoWindow.open(map, marker);
     });
 
     map.addListener('click', function(){
-        infoWindow.close();
+        restObj.infoWindow.close();
     });
 }
 

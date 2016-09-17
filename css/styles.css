@@ -12,6 +12,10 @@ html, body {
 
 }
 
+.info-div {
+    max-width: 300px;
+}
+
 .main {
     height: 100%;
 }

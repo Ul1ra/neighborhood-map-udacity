@@ -14,11 +14,6 @@
 // client ID: 5IEZ35JU3I1RNEMKSQXLVQ1RWMTHZHSGNQO4U0E4SPBAQC1V
 // client secret: DHD0LK5VUJWKD4SUYSL4BUKX0XQ32WU03LMXVNHH04SIBRU4
 
-var yelpUrl = 'https://api.yelp.com/v2/business/yelp-san-francisco';
-yelpUrl += '?' + $.param({
-    'oauth_consumer_key': 'eiWqm3-rfTcK5W9mbfOghw',
-    'oauth_token': 'ocYvvfQnstGlM7ycDnWYjF7qdC93yvnH',
-});
 
 var foursquareUrl = 'https://api.foursquare.com/v2/venues/';
 var foursquareParams = $.param({
@@ -35,34 +30,29 @@ var restObjArray = [
     }
 ];
 
-
-var Restaurant = function(restObj) {
+var Restaurant = function( restObj, venue_data ) {
     self = this;
     self.id = restObj.id;
     self.name = restObj.name;
     self.description = restObj.notes;
-
-    self.api_url = foursquareUrl + self.id + '?' + foursquareParams;
-
-    $.ajax({
-        url: self.api_url,
-        data: {format: 'json'},
-        dataType: 'json'
-    }).done(function(data){
-        console.log(data);
-        console.log('Successfully queried Foursquare API for ' + self.name);
-    }).fail(function(){
-        console.log('Foursquare API failed for ' + self.name);
-    });
-
-    self.coordinates = {lat: 37.780679, lng: -122.396086};
-    self.img_url = 'https://irs3.4sqi.net/img/general/100x100/11759381_S2jRhZnYEoNioxNNRIftqFVNvm97uKI12JuUKfqFk_Y.jpg';
-    self.url = 'https://foursquare.com/v/darwin-cafe/4c4e30871b8e1b8dd9d3c426';
-    self.rest_url = 'http://darwincafesf.com';
+    self.coordinates = {};
+    self.img_url = '';
+    self.url = '';
+    self.rest_url = '';
 
     var img_size = '100x100';
-
     var contentString = $( '#info-template' ).html();
+
+    self.coordinates.lat = parseFloat(venue_data.location.lat);
+    self.coordinates.lng = parseFloat(venue_data.location.lng);
+
+    console.log(self.coordinates);
+
+    self.img_url = venue_data.bestPhoto.prefix + img_size + venue_data.bestPhoto.suffix;
+
+    self.url = venue_data.canonicalUrl;
+
+    self.rest_url = venue_data.url;
 
     contentString = contentString.replace( '{{title}}', self.name )
                                  .replace( '{{img_url}}', self.img_url )
@@ -70,19 +60,56 @@ var Restaurant = function(restObj) {
                                  .replace( '{{url}}', self.url )
                                  .replace( '{{content}}', self.description );
 
+    self.marker = new google.maps.Marker({
+        map: map,
+        position: self.coordinates,
+        title: self.name,
+        animation: google.maps.Animation.DROP
+    });
+
     self.infoWindow = new google.maps.InfoWindow({
         content: contentString
+    });
+
+    self.marker.addListener( 'click', function(){
+        self.marker.setAnimation(4);
+        self.infoWindow.open(map, self.marker);
+    });
+
+    map.addListener( 'click', function(){
+        self.infoWindow.close();
     });
 
 };
 
 var ViewModel = function() {
     var self = this;
+    self.restList = ko.observableArray( [] );
 
-    self.kickoff = function() {
-        self.rest = new Restaurant(restObjArray[0]);
-        addMarker(self.rest, map);
-    };
+    restObjArray.forEach(function ( restObj ){
+        console.log(restObj);
+         var api_url = foursquareUrl + restObj.id + '?' + foursquareParams;
+
+        $.ajax({
+            url: api_url,
+            data: {format: 'json'},
+            dataType: 'json'
+        }).done(function(data){
+
+            var venue_data = data.response.venue;
+            console.log(venue_data);
+            self.restList.push( new Restaurant( restObj, venue_data ) );
+
+        }).fail(function(){
+            console.log( 'Foursquare API failed for ' + restObj.name );
+        });
+    });
+
+    self.restList().forEach(function( rest ) {
+        rest.marker.setMap(map);
+
+    });
+
 };
 
 var viewM = new ViewModel();

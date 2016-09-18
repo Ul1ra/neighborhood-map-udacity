@@ -1,5 +1,6 @@
 var map = {};
 var marker = {};
+var infoWindow = {}
 
 function initMap() {
     var myLatLng = {lat: 37.769115, lng: -122.435745};
@@ -9,11 +10,14 @@ function initMap() {
         center: myLatLng
     });
 
-    viewM.kickoff();
+    infoWindow = new google.maps.InfoWindow();
+
+    // viewM.kickoff();
 
 }
 
-function addMarker( restObj, map ) {
+function addMarker( restObj ) {
+    console.log('ran');
     marker = new google.maps.Marker({
         position: restObj.coordinates,
         animation: google.maps.Animation.DROP,

@@ -26,14 +26,18 @@
                         <p>{{content}}</p>
                     </div>
                 </div>
-                <div class="row foursquare-url-row">
+                <div class="row homepage-url-row">
                     <div class="col-sm-12"><a href="{{rest_url}}">Link to restaurant page.</a></div>
                 </div>
             <div>
         </script>
         <div class="container-fluid">
             <div class="row main">
-                <div class="col-md-3 list-panel">Placeholder for list</div>
+                <div class="col-md-3 list-panel">
+                    <ul data-bind="foreach: { data: restList }">
+                        <li data-bind="text: name, click: $parent.bounce"></li>
+                    </ul>
+                </div>
                 <div class="col-md-9" id="map"></div>
             </div>
         </div>

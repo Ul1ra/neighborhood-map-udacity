@@ -1,38 +1,21 @@
-var map = {};
-var marker = {};
-var infoWindow = {}
+$(function () {
+    $('.navbar-toggle').click(function () {
+        $('.navbar-nav').toggleClass('slide-in');
+        $('.side-body').toggleClass('body-slide-in');
+        $('#search').removeClass('in').addClass('collapse').slideUp(200);
 
-function initMap() {
-    var myLatLng = {lat: 37.769115, lng: -122.435745};
+        /// uncomment code for absolute positioning tweek see top comment in css
+        //$('.absolute-wrapper').toggleClass('slide-in');
 
-    map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 13,
-        center: myLatLng
     });
 
-    infoWindow = new google.maps.InfoWindow();
+   // Remove menu for searching
+   $('#search-trigger').click(function () {
+        $('.navbar-nav').removeClass('slide-in');
+        $('.side-body').removeClass('body-slide-in');
 
-    // viewM.kickoff();
+        /// uncomment code for absolute positioning tweek see top comment in css
+        //$('.absolute-wrapper').removeClass('slide-in');
 
-}
-
-function addMarker( restObj ) {
-    console.log('ran');
-    marker = new google.maps.Marker({
-        position: restObj.coordinates,
-        animation: google.maps.Animation.DROP,
-        map: map,
-        // label: 'What up?',
-        title: 'Hello World!'
     });
-
-    // marker.addListener('click', toggleBounce);
-    marker.addListener( 'click', function(){
-        marker.setAnimation(4);
-        restObj.infoWindow.open(map, marker);
-    });
-
-    map.addListener( 'click', function(){
-        restObj.infoWindow.close();
-    });
-}
+});

@@ -12,8 +12,30 @@ html, body {
 
 }
 
+.button-row {
+    margin: 20px 0px 20px 0px;
+}
+
+.selection-button:hover {
+    cursor: pointer;
+    background-color: darkgray;
+    border: solid 1px black;
+}
+
+.selection-button {
+    border: solid 1px lightgray;
+    border-radius: 4px;
+    padding: 5px 10px 5px 10px;
+/*    margin-left: 20px;
+    margin-right: 20px;*/
+}
+
+li:hover {
+    cursor: pointer;
+}
+
 .info-div {
-    max-width: 300px;
+    max-width: 350px;
 }
 
 .main {
@@ -28,6 +50,14 @@ html, body {
     height: 90px;
     width: 90px;
     border-radius: 4px;
+}
+
+.activeDistrict {
+    font-weight: bold;
+}
+
+.inactiveDistrict {
+    text-decoration: line-through;
 }
 
 /*.info*/

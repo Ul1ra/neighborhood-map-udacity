@@ -43,23 +43,25 @@
                             </button>
                             <!-- brand -->
                             <div class="brand-name-wrapper">
-                                <a class="navbar-brand" id="main-title">Run to Brunch!</a>
+                                <a class="navbar-brand" id="main-title" data-bind="click: allToggle">Run to Brunch! <span class="glyphicon glyphicon-filter"></span></a>
                             </div>
                         </div>
                     </div>
                     <div class="side-menu-container">
                         <ul class="nav navbar-nav">
                             <li class="panel panel-default" id="dropdown">
-                                <a href="#dropdown-1" class="drop-category" data-bind="click: allToggle">
+                                <a data-toggle="collapse" href="#dropdown-1" class="drop-category">
                                     Neighborhoods
-                                    <span class="glyphicon glyphicon-filter"></span>
-                                    <!-- <span class="caret"></span> -->
+                                    <span class="caret"></span>
                                 </a>
-                                <div class="panel-body">
-                                    <ul class="nav navbar-nav" data-bind="foreach: neighborhoodList().sort(function( a, b ) { return a.districtName > b.districtName ? 1 : -1 })">
-                                        <li><a data-bind="css: visible() == true ? 'activeDistrict' : 'inactiveDistrict', text: districtName, click: $parent.filterToggle"></a></li>
-                                    </ul>
+                                <div id="dropdown-1" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <ul class="nav navbar-nav" data-bind="foreach: neighborhoodList().sort(function( a, b ) { return a.districtName > b.districtName ? 1 : -1 })">
+                                            <li><a data-bind="css: visible() == true ? 'activeDistrict' : 'inactiveDistrict', text: districtName, click: $parent.filterToggle"></a></li>
+                                        </ul>
+                                    </div>
                                 </div>
+
                             </li>
                             <li class="panel panel-default" id="dropdown">
                                 <a class="drop-category" data-bind="click: closeWindows">

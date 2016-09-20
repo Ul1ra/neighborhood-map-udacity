@@ -15,6 +15,7 @@ html, body {
 
 #main-title {
     color: black;
+    width: 295px;
 }
 
 /*.brand-name-wrapper > .navbar-brand {
@@ -93,3 +94,9 @@ li:hover {
 }*/
 
 /*.info*/
+
+@media (max-width: 768px) {
+    #main-title {
+        width: 195px;
+    }
+}

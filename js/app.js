@@ -15,6 +15,10 @@ window.initMap = function() {
         center: myLatLng
     });
 
+    // map.addListener( 'click', function() {
+    //     viewM.closeNavbar();
+    // });
+
 }
 
 
@@ -144,6 +148,11 @@ var ViewModel = function() {
     self.restList = ko.observableArray( [] );
     self.neighborhoodList = ko.observableArray( [] );
 
+    var sidebarOpen = ko.computed(function(){
+        var isOpen = $('.navbar-nav').css('left') === "20px" ? true : false;
+        return isOpen;
+    })
+
     // Unique list of neighborhoods from the basic input data.
     var reducedList = restObjArray.reduce(function ( outList, rest ){
         if (outList.indexOf(rest.neighborhood) === -1) {
@@ -217,6 +226,7 @@ var ViewModel = function() {
                     map.addListener( 'click', function(){
                         self.closeWindows();
                     });
+
                 }
 
                 rest.is_visible = true;
@@ -260,6 +270,16 @@ var ViewModel = function() {
         self.neighborhoodList().forEach(function ( neighborhood ) {
             neighborhood.visible( true );
         });
+    };
+
+    self.toggleNavbar = function() {
+        $('.navbar-nav').toggleClass('slide-in');
+        $('.side-body').toggleClass('body-slide-in');
+    };
+
+    self.closeNavbar = function() {
+        $('.navbar-nav').removeClass('slide-in');
+        $('.side-body').removeClass('body-slide-in');
     };
 
 };

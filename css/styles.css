@@ -102,6 +102,10 @@ li:hover {
     height: 25px;
 }
 
+.alert {
+    margin: 0px;
+}
+
 @media (max-width: 768px) {
     #main-title {
         width: 195px;

@@ -16,3 +16,8 @@ Udacity project with knockout JS framework and google maps API.
 * Points of Interest markers can be filtered via a Dropdown filter menu (Neighborhoods)
 * Page is responsive.  Navbar is hidden and toggleable with hamburger when viewing on mobile (screens smaller than 768px width).
 * Page is built using Knockout JS
+
+## Attributions:
+* [Google Maps API](https://developers.google.com/maps/)
+* [Foursquare API](https://developer.foursquare.com/)
+* [Bootsnipp](http://bootsnipp.com/snippets/featured/admin-side-menu) for responsive navbar.

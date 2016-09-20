@@ -29,9 +29,6 @@ var foursquareParams = $.param({
     'v': '20130815'
 });
 
-// Lookup if ID isn't listed in url.
-// https://api.foursquare.com/v2/venues/search?query=conamsf&intent=global&client_id=5IEZ35JU3I1RNEMKSQXLVQ1RWMTHZHSGNQO4U0E4SPBAQC1V&client_secret=DHD0LK5VUJWKD4SUYSL4BUKX0XQ32WU03LMXVNHH04SIBRU4&v=20130815
-
 // My list of baseline restaurant objects.  "ID" is the key for the Foursquare
 // API call.  Name is tracked for my own convenience.
 // I also input the neighborhood data.
@@ -90,6 +87,13 @@ var restObjArray = [
         'id': '3fd66200f964a52026f11ee3',
         'notes': '"Comfort food" sums this up nicely.  Classic brunch fare, done right for the big city.',
         'neighborhood': 'Inner Sunset'
+    },
+
+    {
+        'name': 'MarketBar',
+        'id': '49ef6148f964a520ab681fe3',
+        'notes': 'A reasonably solid choice in terms of food options and quality, but the price reflects the surroundings.  Still, eating on the terrace under the sun, watching the tourists wander by - it\'s an enjoyable experience.',
+        'neighborhood': 'Embarcadero'
     }
 ];
 
@@ -243,22 +247,10 @@ var ViewModel = function() {
 
     }, self);
 
-    self.filterToggle = function( neighborhood ) {
-        neighborhood.visible( !neighborhood.visible() );
-    };
-
-    self.allToggle = function() {
-        var anyVisible = self.neighborhoodList().reduce(function ( bool, neighborhood ){
-            bool = bool || neighborhood.visible();
-            return bool;
-        }, false);
-
-        if (anyVisible) {
-            self.clearAll();
-        } else {
-            self.selectAll();
-        }
-    };
+    self.selectNeighborhood = function( neighborhood ) {
+        self.clearAll();
+        neighborhood.visible( true );
+    }
 
     self.clearAll = function() {
         self.neighborhoodList().forEach(function ( neighborhood ) {

@@ -1,7 +1,9 @@
 
 // My list of baseline restaurant objects.  "ID" is the key for the Foursquare
-// API call.  Name is tracked for my own convenience.
-// I also input the neighborhood data.
+// API call.  Name is manually entered here for convenience.
+// Neighborhood data is manually entered; had a hard time finding a reasonable
+// API to automatically generate neighboor data by location.
+
 var restObjArray = [
     {
         'name': 'Darwin Cafe',

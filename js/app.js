@@ -4,10 +4,6 @@ var infoWindow = {}
 
 window.initMap = function() {
     var myLatLng = {lat: 37.769115, lng: -122.435745};
-
-    // detects if @media CSS responsive styles have been triggered
-    // If so, assumes user is on mobile, changes zoom to be more user friendly.
-
     var zoom = viewM.isMobile() ? 12 : 13;
 
     map = new google.maps.Map(document.getElementById('map'), {
@@ -51,7 +47,7 @@ var Restaurant = function( restObj, venue_data ) {
     self.url = venue_data.canonicalUrl;
     self.rest_url = venue_data.url;
 
-    // Modifying template with rest obj values.
+    // Modifying template with restObj values.
     contentString = contentString.replace( '{{title}}', self.name )
                                  .replace( '{{img_url}}', self.img_url )
                                  .replace( '{{rest_url}}', self.rest_url)
@@ -60,7 +56,7 @@ var Restaurant = function( restObj, venue_data ) {
 
     self.marker = new google.maps.Marker({
         position: self.coordinates,
-        title: self.name,
+        title: self.name
     });
 
     self.infoWindow = new google.maps.InfoWindow({
@@ -83,15 +79,12 @@ var ViewModel = function() {
     self.restList = ko.observableArray( [] );
     self.neighborhoodList = ko.observableArray( [] );
 
+    // detects if @media CSS responsive styles have been triggered
+    // Assumes user is on mobile.  Currently only impacts initial maps zoom.
     self.isMobile = function (){
         var navSize = $('.navbar-nav').css('width');
         return navSize === "200px" ? true : false;
     };
-
-    var sidebarOpen = ko.computed(function(){
-        var isOpen = $('.navbar-nav').css('left') === "20px" ? true : false;
-        return isOpen;
-    })
 
     // Unique list of neighborhoods from the basic input data.
     var reducedList = restObjArray.reduce(function ( outList, rest ){
@@ -101,10 +94,12 @@ var ViewModel = function() {
        return outList
     }, []);
 
+    // Building the neighborhoodList and each model.
     reducedList.forEach(function ( name ) {
         self.neighborhoodList.push( new Neighborhood( name ) );
     });
 
+    // Simple dictionary to show which neighbood(s) are visible.
     self.neighborhoodDict = ko.computed(function(){
         var dictObj = {};
         self.neighborhoodList().forEach(function ( neighborhood ){
@@ -154,25 +149,21 @@ var ViewModel = function() {
         }
     };
 
+    // Returns list of Restaurants based on neighborhood visibility.
+    // Is called every time the neighborhood visibility is changed.
     self.getMarkers = ko.computed(function() {
         return self.restList().filter(function ( rest ) {
-            // self.closeWindows();
-
             if ( self.neighborhoodDict()[rest.neighborhood] ) {
                 if ( rest.is_visible == false ) {
                     rest.marker.setMap( map );
-
                     rest.marker.setAnimation( google.maps.Animation.DROP );
 
                     // prevents constant stacking of event listeners.
                     google.maps.event.clearInstanceListeners(rest.marker);
-
                     rest.marker.addListener( 'click', function(){
                         self.toggleMarker( rest );
                     });
-
                 }
-
                 rest.is_visible = true;
 
                 return true;
@@ -184,7 +175,6 @@ var ViewModel = function() {
                 return false;
             }
         });
-
     }, self);
 
     self.selectNeighborhood = function( neighborhood ) {
@@ -209,6 +199,8 @@ var ViewModel = function() {
         self.hasFiltered( false );
     };
 
+    // Navbar toggle logic taken from bootsnipp, with modifications.
+    // http://bootsnipp.com/snippets/featured/admin-side-menu
     self.toggleNavbar = function() {
         $('.navbar-nav').toggleClass('slide-in');
         $('.side-body').toggleClass('body-slide-in');
@@ -218,7 +210,6 @@ var ViewModel = function() {
         $('.navbar-nav').removeClass('slide-in');
         $('.side-body').removeClass('body-slide-in');
     };
-
 
     self.errorMessage = function ( source, additionalInfo ) {
         additionalInfo = additionalInfo || ''

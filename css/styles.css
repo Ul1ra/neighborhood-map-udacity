@@ -19,14 +19,6 @@ html, body {
     width: 295px;
 }
 
-/*.brand-name-wrapper > .navbar-brand {
-    color: black;
-}
-
-.brand-name-wrapper > .navbar-brand {
-    color: black;
-}
-*/
 .drop-category {
     font-weight: bold;
 }
@@ -106,6 +98,7 @@ li:hover {
     margin: 0px;
 }
 
+/* Primary mobile responsive CSS handled by the bootsnipp */
 @media (max-width: 768px) {
     #main-title {
         width: 195px;

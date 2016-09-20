@@ -12,6 +12,7 @@ window.initMap = function() {
 
 }
 
+
 var foursquareUrl = 'https://api.foursquare.com/v2/venues/';
 var foursquareParams = $.param({
     'client_id': '5IEZ35JU3I1RNEMKSQXLVQ1RWMTHZHSGNQO4U0E4SPBAQC1V',

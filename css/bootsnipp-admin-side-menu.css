@@ -232,8 +232,8 @@
   .side-menu-container > .navbar-nav {
     /* Add position:absolute for scrollable menu -> see top comment */
     position: fixed;
-    left: -300px;
-    width: 300px;
+    left: -200px;
+    width: 200px;
     top: 43px;
     height: 100%;
     border-right: 1px solid #e7e7e7;
@@ -260,7 +260,7 @@
       left: 0;
     }
     100% {
-      left: 300px;
+      left: 200px;
     }
   }
   @-webkit-keyframes bodyslidein {
@@ -268,7 +268,7 @@
       left: 0;
     }
     100% {
-      left: 300px;
+      left: 200px;
     }
   }
   @keyframes bodyslidein {
@@ -276,12 +276,12 @@
       left: 0;
     }
     100% {
-      left: 300px;
+      left: 200px;
     }
   }
   @-moz-keyframes bodyslideout {
     0% {
-      left: 300px;
+      left: 200px;
     }
     100% {
       left: 0;
@@ -289,7 +289,7 @@
   }
   @-webkit-keyframes bodyslideout {
     0% {
-      left: 300px;
+      left: 200px;
     }
     100% {
       left: 0;
@@ -297,7 +297,7 @@
   }
   @keyframes bodyslideout {
     0% {
-      left: 300px;
+      left: 200px;
     }
     100% {
       left: 0;

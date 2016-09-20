@@ -3,7 +3,7 @@ var marker = {};
 var infoWindow = {}
 
 window.initMap = function() {
-    var myLatLng = {lat: 37.769115, lng: -122.435745};
+    var myLatLng = new google.maps.LatLng({lat: 37.769115, lng: -122.435745});
     var zoom = viewM.isMobile() ? 12 : 13;
 
     map = new google.maps.Map(document.getElementById('map'), {
@@ -19,13 +19,13 @@ window.initMap = function() {
 
 
 var Neighborhood = function ( neighborhood ) {
-    self = this;
+    var self = this;
     self.districtName = neighborhood;
     self.visible = ko.observable( true );
 }
 
 var Restaurant = function( restObj, venue_data ) {
-    self = this;
+    var self = this;
     self.id = restObj.id;
     self.name = restObj.name;
     self.description = restObj.notes;

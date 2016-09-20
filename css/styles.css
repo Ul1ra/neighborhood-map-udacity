@@ -6,14 +6,36 @@ html, body {
 
 .container-fluid {
     height: 100%;
+    padding: 0px;
 }
 
-.list-panel {
+#main-title:hover {
+    color: black;
+}
 
+#main-title {
+    color: black;
+}
+
+/*.brand-name-wrapper > .navbar-brand {
+    color: black;
+}
+
+.brand-name-wrapper > .navbar-brand {
+    color: black;
+}
+*/
+.drop-category {
+    font-weight: bold;
 }
 
 .button-row {
     margin: 20px 0px 20px 0px;
+}
+
+.glyphicon-filter, .glyphicon-remove {
+    float: right;
+    margin-right: 5px;
 }
 
 .selection-button:hover {
@@ -53,11 +75,21 @@ li:hover {
 }
 
 .activeDistrict {
-    font-weight: bold;
+    /*font-weight: bold;*/
 }
 
 .inactiveDistrict {
+    font-style: italic;
+    font-weight: light;
     text-decoration: line-through;
 }
+
+.navbar-default .navbar-nav>li> .inactiveDistrict:hover {
+    text-decoration: line-through;
+}
+/*
+.inactiveDistrict:hover {
+
+}*/
 
 /*.info*/

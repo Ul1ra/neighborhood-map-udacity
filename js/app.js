@@ -133,25 +133,24 @@ var Restaurant = function( restObj, venue_data ) {
 var ViewModel = function() {
     var self = this;
     var prevWindow = null;
-    var markLocationList = [];
+    self.windowOpen = ko.observable( false );
+    self.restList = ko.observableArray( [] );
+    self.neighborhoodList = ko.observableArray( [] );
 
-    var reducedList = restObjArray.reduce(function( outList, rest ){
+    var reducedList = restObjArray.reduce(function ( outList, rest ){
         if (outList.indexOf(rest.neighborhood) === -1) {
             outList.push( rest.neighborhood );
         }
        return outList
     }, []);
 
-    self.restList = ko.observableArray( [] );
-    self.neighborhoodList = ko.observableArray( [] );
-
-    reducedList.forEach(function( name ) {
+    reducedList.forEach(function ( name ) {
         self.neighborhoodList.push( new Neighborhood( name ) );
     });
 
     self.neighborhoodDict = ko.computed(function(){
         var dictObj = {};
-        self.neighborhoodList().forEach(function( neighborhood ){
+        self.neighborhoodList().forEach(function ( neighborhood ){
             dictObj[neighborhood.districtName] = neighborhood.visible();
         });
 
@@ -180,6 +179,8 @@ var ViewModel = function() {
     self.closeWindows = function() {
         if ( prevWindow ) {
             prevWindow.close();
+            prevWindow = null;
+            self.windowOpen( false );
         }
     }
 
@@ -188,10 +189,11 @@ var ViewModel = function() {
         rest.marker.setAnimation( 4 );
         prevWindow = rest.infoWindow;
         rest.infoWindow.open( map, rest.marker );
+        self.windowOpen( true );
     };
 
     self.getMarkers = ko.computed(function() {
-        return self.restList().filter(function( rest ) {
+        return self.restList().filter(function ( rest ) {
             self.closeWindows();
 
             if ( self.neighborhoodDict()[rest.neighborhood] ) {
@@ -205,7 +207,7 @@ var ViewModel = function() {
                     });
 
                     map.addListener( 'click', function(){
-                        rest.infoWindow.close();
+                        self.closeWindows();
                     });
                 }
 
@@ -227,14 +229,27 @@ var ViewModel = function() {
         neighborhood.visible( !neighborhood.visible() );
     };
 
+    self.allToggle = function() {
+        var anyVisible = self.neighborhoodList().reduce(function ( bool, neighborhood ){
+            bool = bool || neighborhood.visible();
+            return bool;
+        }, false);
+
+        if (anyVisible) {
+            self.clearAll();
+        } else {
+            self.selectAll();
+        }
+    };
+
     self.clearAll = function() {
-        self.neighborhoodList().forEach(function( neighborhood ) {
+        self.neighborhoodList().forEach(function ( neighborhood ) {
             neighborhood.visible( false );
         });
     };
 
     self.selectAll = function() {
-        self.neighborhoodList().forEach(function( neighborhood ) {
+        self.neighborhoodList().forEach(function ( neighborhood ) {
             neighborhood.visible( true );
         });
     };

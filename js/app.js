@@ -15,9 +15,9 @@ window.initMap = function() {
         center: myLatLng
     });
 
-    // map.addListener( 'click', function() {
-    //     viewM.closeNavbar();
-    // });
+    map.addListener( 'click', function(){
+        viewM.closeWindows();
+    });
 
 }
 
@@ -145,6 +145,8 @@ var Restaurant = function( restObj, venue_data ) {
 };
 
 var ViewModel = function() {
+    // TODO: consolidate prevWindow and windowOpen
+    // TODO: figure out bug re: filtering while window is open.
     var self = this;
     var prevWindow = null;
     self.windowOpen = ko.observable( false );
@@ -205,11 +207,6 @@ var ViewModel = function() {
         }
     }
 
-    self.selfOpen = function( rest ) {
-        console.log('checking');
-        return prevWindow === rest.infoWindow;
-    }
-
     self.toggleMarker = function( rest ) {
         if (prevWindow !== rest.infoWindow) {
             self.closeWindows();
@@ -232,12 +229,11 @@ var ViewModel = function() {
 
                     rest.marker.setAnimation( google.maps.Animation.DROP );
 
+                    // prevents constant stacking of event listeners.
+                    google.maps.event.clearInstanceListeners(rest.marker);
+
                     rest.marker.addListener( 'click', function(){
                         self.toggleMarker( rest );
-                    });
-
-                    map.addListener( 'click', function(){
-                        self.closeWindows();
                     });
 
                 }
@@ -257,6 +253,7 @@ var ViewModel = function() {
     }, self);
 
     self.selectNeighborhood = function( neighborhood ) {
+        self.closeWindows();
         self.clearAll();
         neighborhood.visible( true );
     }

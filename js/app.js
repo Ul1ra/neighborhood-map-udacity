@@ -5,8 +5,13 @@ var infoWindow = {}
 window.initMap = function() {
     var myLatLng = {lat: 37.769115, lng: -122.435745};
 
+    // detects if @media CSS responsive styles have been triggered
+    // If so, assumes user is on mobile, changes zoom to be more user friendly.
+    var navSize = $('.navbar-nav').css('width');
+    var zoom = navSize === "200px" ? 12 : 13;
+
     map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 12,
+        zoom: zoom,
         center: myLatLng
     });
 
@@ -134,10 +139,12 @@ var Restaurant = function( restObj, venue_data ) {
 var ViewModel = function() {
     var self = this;
     var prevWindow = null;
+    // var navSize = ko.observable( $('.navbar-nav').css('width') );
     self.windowOpen = ko.observable( false );
     self.restList = ko.observableArray( [] );
     self.neighborhoodList = ko.observableArray( [] );
 
+    // Unique list of neighborhoods from the basic input data.
     var reducedList = restObjArray.reduce(function ( outList, rest ){
         if (outList.indexOf(rest.neighborhood) === -1) {
             outList.push( rest.neighborhood );

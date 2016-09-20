@@ -89,10 +89,6 @@ li:hover {
     text-decoration: line-through;
 }
 
-.attribution {
-    margin-left: 15px;
-}
-
 .foursquare-logo {
     height: 25px;
 }
@@ -100,5 +96,9 @@ li:hover {
 @media (max-width: 768px) {
     #main-title {
         width: 195px;
+    }
+
+    .attribution {
+        margin-left: 15px;
     }
 }

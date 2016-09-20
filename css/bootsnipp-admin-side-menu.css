@@ -238,6 +238,7 @@
     height: 100%;
     border-right: 1px solid #e7e7e7;
     background-color: #f8f8f8;
+    overflow-y: scroll;
     -moz-animation: slideout 200ms forwards;
     -o-animation: slideout 200ms forwards;
     -webkit-animation: slideout 200ms forwards;

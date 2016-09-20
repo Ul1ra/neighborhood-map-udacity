@@ -11,6 +11,7 @@ html, body {
 
 #main-title:hover {
     color: black;
+    cursor: pointer;
 }
 
 #main-title {
@@ -37,6 +38,14 @@ html, body {
 .glyphicon-filter, .glyphicon-remove {
     float: right;
     margin-right: 5px;
+}
+
+.glyphicon-filter {
+    color: lightgray;
+}
+
+.filterLight {
+    color: black;
 }
 
 .selection-button:hover {

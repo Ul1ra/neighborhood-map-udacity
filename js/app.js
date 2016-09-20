@@ -147,8 +147,8 @@ var Restaurant = function( restObj, venue_data ) {
 var ViewModel = function() {
     var self = this;
     var prevWindow = null;
-    // var navSize = ko.observable( $('.navbar-nav').css('width') );
     self.windowOpen = ko.observable( false );
+    self.hasFiltered = ko.observable( false );
     self.restList = ko.observableArray( [] );
     self.neighborhoodList = ko.observableArray( [] );
 
@@ -205,12 +205,21 @@ var ViewModel = function() {
         }
     }
 
-    self.selectMarker = function( rest ) {
-        self.closeWindows();
-        rest.marker.setAnimation( 4 );
-        prevWindow = rest.infoWindow;
-        rest.infoWindow.open( map, rest.marker );
-        self.windowOpen( true );
+    self.selfOpen = function( rest ) {
+        console.log('checking');
+        return prevWindow === rest.infoWindow;
+    }
+
+    self.toggleMarker = function( rest ) {
+        if (prevWindow !== rest.infoWindow) {
+            self.closeWindows();
+            rest.marker.setAnimation( 4 );
+            prevWindow = rest.infoWindow;
+            rest.infoWindow.open( map, rest.marker );
+            self.windowOpen( rest.infoWindow );
+        } else {
+            self.closeWindows();
+        }
     };
 
     self.getMarkers = ko.computed(function() {
@@ -224,7 +233,7 @@ var ViewModel = function() {
                     rest.marker.setAnimation( google.maps.Animation.DROP );
 
                     rest.marker.addListener( 'click', function(){
-                        self.selectMarker( rest );
+                        self.toggleMarker( rest );
                     });
 
                     map.addListener( 'click', function(){
@@ -256,12 +265,16 @@ var ViewModel = function() {
         self.neighborhoodList().forEach(function ( neighborhood ) {
             neighborhood.visible( false );
         });
+
+        self.hasFiltered( true );
     };
 
     self.selectAll = function() {
         self.neighborhoodList().forEach(function ( neighborhood ) {
             neighborhood.visible( true );
         });
+
+        self.hasFiltered( false );
     };
 
     self.toggleNavbar = function() {
